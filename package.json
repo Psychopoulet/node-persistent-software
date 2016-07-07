@@ -1,0 +1,34 @@
+{
+  "name": "node-persistent-software",
+  "version": "0.1.0",
+  "description": "Spawn a software and keep it running",
+  "main": "lib/main.js",
+  "scripts": {
+    "start": "node lib/main.js",
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Psychopoulet/node-persistent-software.git"
+  },
+  "keywords": [
+    "spawn", "forever", "keep", "software", "exe", "run"
+  ],
+  "author": "Sébastien VIDAL",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Psychopoulet/node-persistent-software/issues"
+  },
+  "dependencies": {
+    "async-eventemitter": "^0.2.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^2.0.0",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-plumber": "^1.0.0"
+  },
+  "homepage": "https://github.com/Psychopoulet/node-persistent-software#readme",
+  "engines" : { "node" : ">=4.0.0" }
+}
