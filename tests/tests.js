@@ -32,6 +32,23 @@ describe("run", function() {
 
 	});
 
+	it("should check no args running", function(done) {
+
+		let ps = new PersistantSoftware(
+			"C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+		).on("error", function(msg) {
+			assert.strictEqual("string", typeof msg, "the error is not a string");
+		}).on("stopped", function() {
+
+			assert.strictEqual(1, ps.countRun, "wrong count");
+			assert.strictEqual(1, ps.maxCountRun, "wrong max");
+
+			done();
+
+		}).max(1).start();
+
+	}).timeout(10000);
+
 	it("should check normal running with max", function(done) {
 
 		let ps = new PersistantSoftware(
