@@ -16,6 +16,7 @@ $ npm install node-persistent-software
 * ``` boolean stopped ``` if stopped, keep it stopped
 * ``` int maxCountRun ``` max start iteration
 * ``` int countRun ``` current start iteration
+* ``` asynchronous-eventemitter eventEmitter ``` async events manager
 
 * ``` constructor(string software[, array arguments]) ```
 
@@ -23,7 +24,7 @@ $ npm install node-persistent-software
 * ``` infinite() : return this ``` no max iteration and reset current
 * ``` start() : return this ``` run the software for the first time
 * ``` stop() : return this ``` stop the software and don't restart it
-* ``` on("error", (err) => {}) : return this ``` fire if an error occurs
+* ``` on("error", (err) => {}) : return this ``` fire if an error occurs (use try/catch to avoid loop)
 * ``` on("started", () => {}) : return this ``` fire if the software is started (or restarted)
 * ``` on("ended", () => {}) : return this ``` fire if the software is killed
 * ``` on("stopped", () => {}) : return this ``` fire if the software is stopped
