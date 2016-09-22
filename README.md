@@ -18,7 +18,7 @@ $ npm install node-persistent-software
 * ``` int countRun ``` current start iteration
 * ``` asynchronous-eventemitter eventEmitter ``` async events manager
 
-* ``` constructor(string software[, array arguments]) ```
+* ``` constructor(string software [, array arguments [ , object options ] ] ) ``` => see [spawn](https://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options) documentation
 
 * ``` max(int maxIteration) : return this ``` change max iterations and reset current
 * ``` infinite() : return this ``` no max iteration and reset current
