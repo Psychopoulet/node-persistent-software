@@ -1,6 +1,6 @@
 {
   "name": "node-persistent-software",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Spawn a software and keep it running",
   "main": "lib/main.js",
   "scripts": {

@@ -139,4 +139,47 @@ describe("run", () => {
 
 	}).timeout(1 * 1000);
 
+	/*
+
+	// personnal check with firefox on Windows, based on the documentation
+
+	it("should check normal running with infinite and end", () => {
+
+		return new Promise(() => {
+
+			var ps = new PersistantSoftware(
+				"C:\\Program Files\\Mozilla Firefox\\firefox.exe",
+				[ "https://www.npmjs.com/package/node-persistent-software" ]
+			).on("error", (msg) => {
+				(1, console).log(msg);
+			})
+
+			.infinite()
+
+			.on("firststart", () => {
+				(1, console).log("Firefox is started for the first time !");
+			}).on("restart", () => {
+				(1, console).log("Firefox is started again...");
+			}).on("start", () => {
+				(1, console).log("anyway, Firefox is started.");
+			})
+
+			.on("stop", () => {
+
+				(1, console).log("Firefox is stopped, trying to restart...");
+
+				if (1 <= ps.successCountRun) {
+					ps.end();
+				}
+
+			}).on("end", () => {
+				(1, console).log("/!\\ Firefox is stopped and cannot be restarted /!\\");
+			}).start();
+
+		});
+
+	}).timeout(1 * 1000);
+
+	*/
+
 });
