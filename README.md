@@ -69,7 +69,7 @@ new PersistantSoftware(
 .on("stop", () => {
   console.log("Firefox is stopped, trying to restart...");
 }).on("end", () => {
-  console.log("/!\ Firefox is stopped and cannot be restarted /!\");
+  console.log("/!\\ Firefox is stopped and cannot be restarted /!\\");
 }).start();
 
 
@@ -93,7 +93,7 @@ new PersistantSoftware(
 .on("stop", () => {
   console.log("Firefox is stopped, trying to restart...");
 }).on("end", () => {
-  console.log("/!\ Firefox is stopped and cannot be restarted /!\");
+  console.log("/!\\ Firefox is stopped and cannot be restarted /!\\");
 }).start();
 ```
 
