@@ -8,82 +8,135 @@
 
 // tests
 
-describe("run", function() {
+describe("run", () => {
 
-	it("should check wrong path running", function(done) {
+	it("should check wrong path running", () => {
 
-		let ps = new PersistantSoftware("wsdvwsdvwsdvwsdvsdv").on("error", function () {});
+		return new Promise((resolve, reject) => {
 
-		ps.on("started", function () {
-			done("software found");
-		}).on("stopped", function () {
+			let ps = new PersistantSoftware("wsdvwsdvwsdvwsdvsdv").on("error", () => { }); // there IS an error. this is the point...
 
-			assert.strictEqual(1, ps.countRun, "wrong count");
-			assert.strictEqual(1, ps.maxCountRun, "wrong max");
+			ps.on("firststart", () => {
+				reject("software found");
+			}).on("end", () => {
 
-			done();
+				try {
 
-		}).max(1).start();
+					assert.strictEqual(0, ps.successCountRun, "wrong count");
+					assert.strictEqual(1, ps.maxCountRun, "wrong max");
 
-	});
+					resolve();
 
-	it("should check no args running", function(done) {
+				}
+				catch(e) {
+					reject((e.message) ? e.message : e);
+				}
 
-		let ps = new PersistantSoftware("node").on("error", function(msg) {
-			(1, console).log("error", msg);
+			}).max(1).start();
+
 		});
 
-		ps.on("started", function() {
+	}).timeout(1 * 1000);
 
-			setTimeout(function() {
-				ps.stop();
-			}, 1500);
+	it("should check no args running", () => {
 
-		}).on("stopped", function() {
+		return new Promise((resolve, reject) => {
 
-			assert.strictEqual(1, ps.countRun, "wrong count");
-			assert.strictEqual(1, ps.maxCountRun, "wrong max");
+			let ps = new PersistantSoftware("node").on("error", (err) => {
+				(0, console).log(err);
+			});
 
-			done();
+			ps.on("firststart", () => {
 
-		}).max(1).start();
+				setTimeout(() => {
+					ps.end();
+				}, 200);
 
-	}).timeout(5000);
+			}).on("restart", () => {
+				reject("restarted");
+			}).on("end", () => {
 
-	it("should check normal running with max", function(done) {
+				try {
 
-		let ps = new PersistantSoftware( "node", [ "-v" ] ).on("error", function(msg) {
-			(1, console).log("error", msg);
+					assert.strictEqual(1, ps.successCountRun, "wrong count");
+					assert.strictEqual(1, ps.maxCountRun, "wrong max");
+
+					resolve();
+
+				}
+				catch(e) {
+					reject((e.message) ? e.message : e);
+				}
+
+			}).max(1).start();
+
 		});
 
-		ps.on("stopped", function() {
+	}).timeout(1 * 1000);
 
-			assert.strictEqual(3, ps.countRun, "wrong count");
-			assert.strictEqual(3, ps.maxCountRun, "wrong max");
+	it("should check normal running with max", () => {
 
-			done();
+		return new Promise((resolve, reject) => {
 
-		}).max(3).start();
+			let version = "", ps = new PersistantSoftware( "node", [ "-v" ] ).on("error", (err) => {
+				(1, console).log(err);
+			});
 
-	}).timeout(5000);
+			ps.on("start", (process) => {
 
-	it("should check normal running with infinite and stop", function(done) {
+				process.stdout.on("data", (data) => {
+					version = data.toString("utf8").trim();
+				});
 
-		let ps = new PersistantSoftware( "node", [ "-v" ] ).on("error", function(msg) {
-			(1, console).log("error", msg);
+			}).on("end", () => {
+
+				try {
+
+					assert.strictEqual(process.version, version, "wrong version");
+					assert.strictEqual(2, ps.successCountRun, "wrong count");
+					assert.strictEqual(2, ps.maxCountRun, "wrong max");
+
+					resolve();
+
+				}
+				catch(e) {
+					reject((e.message) ? e.message : e);
+				}
+
+			}).max(2).start();
+
 		});
 
-		ps.on("started", function() {
-			ps.stop();
-		}).on("stopped", function() {
+	}).timeout(1 * 1000);
 
-			assert.strictEqual(1, ps.countRun, "wrong count");
-			assert.strictEqual(0, ps.maxCountRun, "wrong max");
+	it("should check normal running with infinite and end", () => {
 
-			done();
+		return new Promise((resolve, reject) => {
 
-		}).infinite().start();
+			let ps = new PersistantSoftware( "node", [ "-v" ] ).on("error", (err) => {
+				(1, console).log(err);
+			});
 
-	}).timeout(5000);
+			ps.on("restart", () => {
+				ps.end();
+			}).on("end", () => {
+
+				try {
+
+					assert.strictEqual(2, ps.successCountRun, "wrong count");
+					assert.strictEqual(0, ps.maxCountRun, "wrong max");
+
+					resolve();
+
+				}
+				catch(e) {
+					reject((e.message) ? e.message : e);
+				}
+
+			}).infinite().start();
+
+		});
+
+	}).timeout(1 * 1000);
 
 });

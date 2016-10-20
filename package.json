@@ -1,6 +1,6 @@
 {
   "name": "node-persistent-software",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "Spawn a software and keep it running",
   "main": "lib/main.js",
   "scripts": {
@@ -23,11 +23,11 @@
     "asynchronous-eventemitter": "^0.1.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-eslint": "^2.0.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^2.1.0",
     "gulp-exclude-gitignore": "^1.0.0",
-    "gulp-mocha": "^2.0.0",
-    "gulp-plumber": "^1.0.0"
+    "gulp-mocha": "^2.2.0",
+    "gulp-plumber": "^1.1.0"
   },
   "homepage": "https://github.com/Psychopoulet/node-persistent-software#readme",
   "engines" : { "node" : ">=4.0.0" }
