@@ -100,7 +100,7 @@ new PersistantSoftware(
 ## Tests
 
 ```bash
-$ gulp
+$ npm test
 ```
 
 ## License
