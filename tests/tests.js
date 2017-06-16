@@ -4,7 +4,7 @@
 // deps
 
 	const 	assert = require("assert"),
-			PersistantSoftware = require(require("path").join(__dirname, "..", "lib", "main.js"));
+			PersistantSoftware = require(require("path").join(__dirname, "..", "dist", "main.js"));
 
 // tests
 
@@ -145,7 +145,7 @@ describe("run", () => {
 
 	it("should check normal running with infinite and end", () => {
 
-		return new Promise(() => {
+		return new Promise((resolve) => {
 
 			var ps = new PersistantSoftware(
 				"C:\\Program Files\\Mozilla Firefox\\firefox.exe",
@@ -161,7 +161,7 @@ describe("run", () => {
 			}).on("restart", () => {
 				(1, console).log("Firefox is started again...");
 			}).on("start", () => {
-				(1, console).log("anyway, Firefox is started.");
+				(1, console).log("Anyway, Firefox is started.");
 			})
 
 			.on("stop", () => {
@@ -170,6 +170,7 @@ describe("run", () => {
 
 				if (1 <= ps.successCountRun) {
 					ps.end();
+					resolve();
 				}
 
 			}).on("end", () => {
@@ -178,7 +179,7 @@ describe("run", () => {
 
 		});
 
-	}).timeout(1 * 1000);
+	}).timeout(5 * 1000);
 
 	*/
 
