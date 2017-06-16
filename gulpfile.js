@@ -3,31 +3,46 @@
 
 // deps
 
-	const path = require("path"),
+	const path = require("path");
 
-		gulp = require("gulp"),
-		eslint = require("gulp-eslint"),
-		excludeGitignore = require("gulp-exclude-gitignore"),
-		mocha = require("gulp-mocha"),
-		plumber = require("gulp-plumber");
+	// gulp
+	const gulp = require("gulp");
+	const plumber = require("gulp-plumber");
+
+	// tests
+	const eslint = require("gulp-eslint");
+	const mocha = require("gulp-mocha");
+
+	// compile
+	const babel = require("gulp-babel");
+	require("babel-preset-es2015");
 
 // private
 
-	var _gulpFile = path.join(__dirname, "gulpfile.js"),
-		_libFiles = path.join(__dirname, "lib", "**", "*.js"),
-		_unitTestsFiles = path.join(__dirname, "tests", "**", "*.js"),
-		_allJSFiles = [_gulpFile, _libFiles, _unitTestsFiles];
+	var _gulpFile = path.join(__dirname, "gulpfile.js");
+	var _libFiles = path.join(__dirname, "lib", "*.js");
+	var _dirFiles = path.join(__dirname, "dir", "*.js");
+	var _unitTestsFiles = path.join(__dirname, "tests", "*.js");
+	var _toTestFiles = [_gulpFile, _libFiles, _unitTestsFiles];
 
 // tasks
 
-	gulp.task("eslint", function () {
+	// tests
 
-		return gulp.src(_allJSFiles)
+	gulp.task("eslint", () => {
+
+		return gulp.src(_toTestFiles)
 			.pipe(plumber())
-			.pipe(excludeGitignore())
 			.pipe(eslint({
+				"parserOptions": {
+					"ecmaVersion": 6
+				},
 				"rules": {
-					"indent": 0
+					"linebreak-style": 0,
+					"quotes": [ 1, "double" ],
+					"indent": 0,
+					// "indent": [ 2, "tab" ],
+					"semi": [ 2, "always" ]
 				},
 				"env": {
 					"node": true, "es6": true, "mocha": true
@@ -39,11 +54,23 @@
 
 	});
 
-	gulp.task("mocha", ["eslint"], function () {
+	gulp.task("mocha", ["eslint"], () => {
 
 		return gulp.src(_unitTestsFiles)
 			.pipe(plumber())
 			.pipe(mocha({reporter: "spec"}));
+
+	});
+
+	// compile
+
+	gulp.task("babel", ["eslint"], function () {
+
+		return gulp.src(_libFiles)
+			.pipe(babel({
+				presets: ["es2015"]
+			}))
+			.pipe(gulp.dest("dist"));
 
 	});
 
