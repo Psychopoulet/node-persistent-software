@@ -8,7 +8,7 @@ Spawn a software and keep it running
 $ npm install node-persistent-software
 ```
 
-## Doc
+## Doc (extends : [asynchronous-eventemitter](https://www.npmjs.com/package/asynchronous-eventemitter))
 
 ### Attributes
 
@@ -31,7 +31,6 @@ $ npm install node-persistent-software
 * ``` infinite() : this ``` no max iteration and reset current
 * ``` start() : this ``` run the software for the first time
 * ``` end() : this ``` stop the software and don't restart it
-* ``` on(string eventName, function callback) : this ```
 
 ### Events
 

@@ -3,8 +3,8 @@
 
 // deps
 
-	const 	assert = require("assert"),
-			PersistantSoftware = require(require("path").join(__dirname, "..", "dist", "main.js"));
+	const assert = require("assert");
+	const PersistantSoftware = require(require("path").join(__dirname, "..", "dist", "main.js"));
 
 // tests
 
