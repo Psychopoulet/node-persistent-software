@@ -1,6 +1,9 @@
 # node-persistent-software
 Spawn a software and keep it running
 
+[![Build Status](https://api.travis-ci.org/Psychopoulet/node-persistent-software.svg?branch=master)](https://travis-ci.org/Psychopoulet/node-persistent-software)
+[![Coverage Status](https://coveralls.io/repos/github/Psychopoulet/node-persistent-software/badge.svg?branch=master)](https://coveralls.io/github/Psychopoulet/node-persistent-software)
+[![Dependency Status](https://img.shields.io/david/Psychopoulet/node-persistent-software/master.svg)](https://github.com/Psychopoulet/node-persistent-software)
 
 ## Installation
 
@@ -99,7 +102,7 @@ new PersistantSoftware(
 ## Tests
 
 ```bash
-$ npm test
+$ gulp
 ```
 
 ## License
