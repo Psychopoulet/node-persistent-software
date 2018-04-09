@@ -28,7 +28,7 @@
     "url": "https://github.com/Psychopoulet/node-persistent-software/issues"
   },
   "dependencies": {
-    "asynchronous-eventemitter": "^0.2.2"
+    "asynchronous-eventemitter": "0.3.0"
   },
   "devDependencies": {
     "gulp": "3.9.1",
@@ -39,5 +39,8 @@
     "gulp-coveralls": "0.1.4",
     "pre-commit": "1.2.2"
   },
-  "homepage": "https://github.com/Psychopoulet/node-persistent-software#readme"
+  "homepage": "https://github.com/Psychopoulet/node-persistent-software#readme",
+  "engines": {
+    "node": ">=6.0.0"
+  }
 }
