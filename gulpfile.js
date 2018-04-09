@@ -13,74 +13,77 @@
 	const eslint = require("gulp-eslint");
 	const mocha = require("gulp-mocha");
 
-	// compile
-	const babel = require("gulp-babel");
-	require("babel-preset-es2015");
+	// reports
+	const istanbul = require("gulp-istanbul");
+	const coveralls = require("gulp-coveralls");
 
-// private
+// consts
 
-	var _gulpFile = path.join(__dirname, "gulpfile.js");
-	var _libFiles = path.join(__dirname, "lib", "*.js");
-	var _dirFiles = path.join(__dirname, "dir", "*.js");
-	var _unitTestsFiles = path.join(__dirname, "tests", "*.js");
-	var _toTestFiles = [_gulpFile, _libFiles, _unitTestsFiles];
+	const ISTRAVIS = (0, process).env.TRAVIS || false;
+
+	const APP_FILES = [ path.join(__dirname, "lib", "*.js") ];
+	const UNITTESTS_FILES = [ path.join(__dirname, "tests", "**", "*.js") ];
+
+	const ALL_FILES = [ path.join(__dirname, "gulpfile.js") ]
+		.concat(APP_FILES)
+		.concat(UNITTESTS_FILES);
 
 // tasks
 
-	// tests
-
 	gulp.task("eslint", () => {
 
-		return gulp.src(_toTestFiles)
+		return gulp.src(ALL_FILES)
 			.pipe(plumber())
 			.pipe(eslint({
+				"env": require(path.join(__dirname, "gulpfile", "eslint", "env.json")),
+				"globals": require(path.join(__dirname, "gulpfile", "eslint", "globals.json")),
 				"parserOptions": {
 					"ecmaVersion": 6
 				},
-				"rules": {
-					"linebreak-style": 0,
-					"quotes": [ 1, "double" ],
-					"indent": 0,
-					// "indent": [ 2, "tab" ],
-					"semi": [ 2, "always" ]
-				},
-				"env": {
-					"node": true, "es6": true, "mocha": true
-				},
-				"extends": "eslint:recommended"
+				// http://eslint.org/docs/rules/
+				"rules": require(path.join(__dirname, "gulpfile", "eslint", "rules.json"))
 			}))
 			.pipe(eslint.format())
 			.pipe(eslint.failAfterError());
 
 	});
 
-	gulp.task("mocha", ["eslint"], () => {
+	gulp.task("istanbul", [ "eslint" ], () => {
 
-		return gulp.src(_unitTestsFiles)
+		return gulp.src(APP_FILES)
 			.pipe(plumber())
-			.pipe(mocha({reporter: "spec"}));
+			.pipe(istanbul({ "includeUntested": true }))
+			.pipe(istanbul.hookRequire());
 
 	});
 
-	// compile
+	gulp.task("mocha", [ "istanbul" ], () => {
 
-	gulp.task("babel", ["eslint"], function () {
-
-		return gulp.src(_libFiles)
-			.pipe(babel({
-				presets: ["es2015"]
-			}))
-			.pipe(gulp.dest("dist"));
+		return gulp.src(UNITTESTS_FILES)
+			.pipe(plumber())
+			.pipe(mocha())
+			.pipe(istanbul.writeReports())
+			.pipe(istanbul.enforceThresholds({ "thresholds": { "global": 85 } }));
 
 	});
+
+	gulp.task("coveralls", [ "mocha" ], () => {
+
+		return gulp.src(path.join(__dirname, "coverage", "lcov.info"))
+			.pipe(plumber())
+			.pipe(coveralls());
+
+	});
+
+	gulp.task("tests", [ ISTRAVIS ? "coveralls" : "mocha" ]);
 
 // watcher
 
-	gulp.task("watch", function () {
-		gulp.watch(_allJSFiles, ["mocha"]);
+	gulp.task("watch", () => {
+		gulp.watch(ALL_FILES, [ "eslint" ]);
 	});
+
 
 // default
 
-	gulp.task("default", ["mocha"]);
-	
+	gulp.task("default", [ "mocha" ]);
