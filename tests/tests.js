@@ -9,6 +9,7 @@
 // consts
 
 	const IPCONFIG = "win32" === require("os").platform() ? "ipconfig" : "ifconfig";
+	const MAX_TIMEOUT = 10000;
 
 // tests
 
@@ -36,7 +37,7 @@ describe("run", () => {
 
 		});
 
-	}).timeout(1 * 1000);
+	}).timeout(MAX_TIMEOUT);
 
 	it("should check no args running", () => {
 
@@ -63,7 +64,7 @@ describe("run", () => {
 
 		});
 
-	}).timeout(1 * 1000);
+	}).timeout(MAX_TIMEOUT);
 
 	it("should check normal running with max", () => {
 
@@ -90,7 +91,7 @@ describe("run", () => {
 
 		});
 
-	}).timeout(1 * 1000);
+	}).timeout(MAX_TIMEOUT);
 
 	it("should check normal running with infinite and end", () => {
 
@@ -113,7 +114,7 @@ describe("run", () => {
 
 		});
 
-	}).timeout(1 * 1000);
+	}).timeout(MAX_TIMEOUT);
 
 	it("should check normal running with infinite and end", () => {
 
@@ -151,6 +152,6 @@ describe("run", () => {
 
 		});
 
-	}).timeout(5 * 1000);
+	}).timeout(MAX_TIMEOUT);
 
 });
