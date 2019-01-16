@@ -1,10 +1,12 @@
 # node-persistent-software
 Spawn a software and keep it running
 
-[![Build Status](https://api.travis-ci.org/Psychopoulet/node-persistent-software.svg?branch=master)](https://travis-ci.org/Psychopoulet/node-persistent-software)
-[![Coverage Status](https://coveralls.io/repos/github/Psychopoulet/node-persistent-software/badge.svg?branch=master)](https://coveralls.io/github/Psychopoulet/node-persistent-software)
-[![Dependency Status](https://david-dm.org/Psychopoulet/node-persistent-software/status.svg)](https://david-dm.org/Psychopoulet/node-persistent-software)
-[![Dev dependency Status](https://david-dm.org/Psychopoulet/node-persistent-software/dev-status.svg)](https://david-dm.org/Psychopoulet/node-persistent-software?type=dev)
+[![Build status](https://api.travis-ci.org/Psychopoulet/node-persistent-software.svg?branch=master)](https://travis-ci.org/Psychopoulet/node-persistent-software)
+[![Coverage status](https://coveralls.io/repos/github/Psychopoulet/node-persistent-software/badge.svg?branch=master)](https://coveralls.io/github/Psychopoulet/node-persistent-software)
+[![Dependency status](https://david-dm.org/Psychopoulet/node-persistent-software/status.svg)](https://david-dm.org/Psychopoulet/node-persistent-software)
+[![Dev dependency status](https://david-dm.org/Psychopoulet/node-persistent-software/dev-status.svg)](https://david-dm.org/Psychopoulet/node-persistent-software?type=dev)
+[![Issues](https://img.shields.io/github/issues/Psychopoulet/node-persistent-software.svg)](https://github.com/Psychopoulet/node-persistent-software/issues)
+[![Pull requests](https://img.shields.io/github/issues-pr/Psychopoulet/node-persistent-software.svg)](https://github.com/Psychopoulet/node-persistent-software/pulls)
 
 ## Installation
 
@@ -105,7 +107,7 @@ new PersistantSoftware("node", [ "-v" ]).on("error", (err) => {
 ## Tests
 
 ```bash
-$ gulp
+$ npm run-script tests
 ```
 
 ## License
